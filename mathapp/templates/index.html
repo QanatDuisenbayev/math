@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Intense Math</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+    {% load staticfiles %}
+  <link href="{% static 'img/icon.jpg' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.theme.default.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/modal-video/css/modal-video.min.css' %}" rel="stylesheet">
+  <!--for my category--->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blog_responsive.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blog_single.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blog_single_responsive.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/_skill.css' %}">
+
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <style type="text/css">
+    .navbar-nav .nav-item .nav-link.active,#mainNav .navbar-nav .nav-item .nav-link:hover{
+      color:#fed136;
+    }
+    .nav-menu a {
+
+      font-size: 17px;
+      text-transform: none;
+      color: black;
+      font-weight: 20px;
+      text-transform: uppercase;
+    }
+    .nav-menu li {
+      text-transform: none;
+    }
+    .free {
+     border: 1px solid;
+     height: 40px;
+     width: 40%;
+     margin: auto;
+     background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="header header-hide">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <h1><a href="{% url 'base_view' %}" class="scrollto"><span>INTENSE</span>MATH</a></h1>
+
+      </div>
+      {% block menu %}
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#hero">Басты</a></li>
+          <li><a href="#get-started">Курстар</a></li>
+          <li><a href="#team">Біз туралы</a></li>
+          <li><a href="#pricing">Ақылы бөлім</a></li>
+          {% if not request.user.is_authenticated %}
+          <li><a href="{% url 'login_view' %}"> <i class="fa fa-sign-in"></i> Кіру</a></li>
+          <li><a href="{% url 'signup' %}"> <i class="fa fa-sign-in"></i> Тіркелу</a></li>
+          {% else %}
+          {% endif %}
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i> Жeке парақшам</a></li>
+          <li><a href="{% url 'logout_view' %}"> <i class="fa fa-sign-out"></i> Шығу</a></li> 
+          {% endif %}
+        </ul>
+      </nav>
+      {% endblock menu %}
+    </div>
+  </header>
+
+{% block content %}
+  <section id="hero" class="wow fadeIn">
+    <div class="hero-container">
+      <h1>Қош келдіңіздер!</h1>
+      <h2>"Intense Math"-математика онлайн курсы</h2>
+      <img src="{% static 'img/logo_base.jpg' %}" alt="INTENSE MATH"> 
+      <a href="#get-started" class="btn-get-started scrollto">кеттік!</a>
+      <div class="btns">
+       <!-- <a href="#"><i class="fa fa-apple fa-3x"></i> App Store</a>-->
+       <!-- <a href="#"><i class="fa fa-play fa-3x"></i> Google Play</a>-->
+      </div>
+    </div>
+  </section><!-- #hero -->
+
+
+  <section id="get-started" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+
+        <h2>БІЗДІҢ КУРСТАР</h2>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="feature-block">
+
+            <img src="{% static 'img/svg/cloud.jpg' %}" alt="img" class="img-fluid">
+            <h4>Бастаушы математика</h4>
+            <div class="free text-center"><p style="font-size: 20px; letter-spacing: 9px; font-weight: 1000; color: white;">тегін</p></div>
+            <p>Жай сандар, натурал сандар, нақты сандар және тағы басқа материалдары бар математика курсы</p>
+            <a href="{% url 'beginner' %}">толығырақ</a>
+
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="feature-block">
+            {% if request.user.is_authenticated %}
+            <img src="{% static 'img/svg/planet.jpg' %}" alt="img" class="img-fluid">
+            <h4>ЭЛЕМЕНТАРЛЫҚ МАТЕМАТИКА</h4>
+            <p>Жай сандар, натурал сандар, нақты сандар және тағы басқа материалдары бар математика курсы</p>
+            <a href="{% url 'category' %}">толығырақ</a>
+            {% else %}
+            <img src="{% static 'img/svg/planet.jpg' %}" alt="img" class="img-fluid">
+            <h4>ЭЛЕМЕНТАРЛЫҚ МАТЕМАТИКА</h4>
+            <p>Жай сандар, натурал сандар, нақты сандар және тағы басқа материалдары бар математика курсы</p>
+            <a  href="{% url 'login_view' %}">толығырақ</a>
+             {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section id="newsletter" class="newsletter text-center wow fadeInUp"
+
+style="  background: transparent url({% static 'img/profile.jpg' %}) no-repeat center top fixed;background-size: cover;
+}" 
+  >
+    <div class="overlay padd-section">
+      <div class="container">
+        <br><h1 style="color: #71c55d;font-size: 60px;font-weight: 1000;">INTENSE MATH</h1><br>
+       </div>
+    </div>
+  </section>
+
+
+
+<br><br><br><br><br>
+  <section id="features" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+        <h2>НЕГЕ БІЗ?</h2>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{% static 'img/svg/design-tool.svg' %}" alt="img" class="img-fluid">
+            <h4>Авторлық методика</h4>
+            <p>Курс онлайн түрде болады, материалдарды қарап түсініп және бізбен байланысқа шықсаңыз болады.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{% static 'img/svg/paint-palette.png' %}" alt="img" class="img-fluid">
+            <h4>ТЕЗ НӘТИЖЕ</h4>
+            <p>Егер сіз күніне бір немесе екі тақырыптан үйренсеңіз 3 айда жақсы нәтижеге қол жеткізесіз.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{% static 'img/svg/asteroid.png' %}" alt="img" class="img-fluid">
+            <h4>ТӨМЕН БАҒА</h4>
+            <p>Репетитор немесе оқу орталықтарына қарағанда өте аз баға, сондықтан соны пайдалану керек.</p>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{% static 'img/svg/code.png' %}" alt="img" class="img-fluid">
+            <h4>ТЕСТТЕР</h4>
+            <p>Үйренген материалдарыңызға байланысы тесттер бар, өз нәтижеңізді тексеріп жүріңіз.</p>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!--==========================
+    Video Section
+  ============================-->
+
+  <section id="video" class="text-center wow fadeInUp">
+    <div class="overlay">
+      <div class="container-fluid container-full">
+
+        <div class="row">
+          <a href="#" class="js-modal-btn play-btn" data-video-id="IRdyAs0xX4s"></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!--==========================
+    Team Section
+  ============================-->
+  <section id="team" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+
+        <h2>БІЗ ТУРАЛЫ</h2>
+        <p>Білімді, тәжіриебелі мұғалімдер тобы.</p>
+
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="team-block bottom">
+            <img src="img/team/1.jpg" class="img-responsive" alt="img">
+            <div class="team-content">
+              <ul class="list-unstyled">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+              <span>Веб-программист</span>
+              <h4>Қанат Дуйсенбаев</h4>
+            </div>
+          </div>
+        </div>
+
+       <div class="col-sm-4">
+          <div class="team-block bottom">
+            <img src="img/team/2.jpg" class="img-responsive" alt="img">
+            <div class="team-content">
+              <ul class="list-unstyled">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+              <span>Веб-программист</span>
+              <h4>Мусабек Сабит</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="team-block bottom">
+            <img src="img/team/3.jpg" class="img-responsive" alt="img">
+            <div class="team-content">
+              <ul class="list-unstyled">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              </ul>
+              <span>Веб-дизайнер</span>
+              <h4>Аджан Серікболсын</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br><br><br>
+  </section>
+
+
+  <section id="pricing" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+
+        <h2>КУРС БАҒАСЫ</h2>
+        <!--- <p>Акциялар немесе жеңілдіктер болса белгіленеді .</p> --->
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row text-center">
+
+        <div class="col-sm-12">
+          <div class="block-pricing">
+            <div class="table">
+              <h4>ЭЛЕМЕНТАРЛЫ МАТЕМАТИКА</h4>
+              <h2>5000тг</h2>
+              <ul class="list-unstyled">
+                <li>Рұқсат <b>1</b>ай</li>
+                <li><b>7</b> категория</li>
+                <li><b>30</b> видео</li>
+                <li><b>5</b> тест</li>
+                <li>2 мұғалім</li>
+              </ul>
+              <div class="table_btn">
+                {% if request.user.is_authenticated %}
+              
+                <a href="{% url 'buy' %}" class="btn"><i class="fa fa-shopping-cart"></i>Қазір алу</a>
+                {% else %}
+                <a href="{% url 'login_view' %}" class="btn"><i class="fa fa-shopping-cart"></i>Қазір алу</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-12">
+          <div class="footer-logo">
+
+            <a class="navbar-brand" href="#">Intense Math</a>
+            <p>Kazakshtan company.Was created in 2016,
+            now actively working 
+            </p>
+            <p>Phone number : +7(708) 567-43-27</p>
+
+          </div>
+        </div>
+      </div>
+    </div><br><br><br>
+      <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+        <a href="https://wa.me/77085674327?text=Салем%20INTENSE MATH !"><img src="{% static 'img/whatsapp.png' %}" class="img-fluid"></a>
+        <a href="https://vk.com/priznavashkikaznu"><img src="{% static 'img/vkontakte.png' %}"   class="img-fluid"></a>
+        </div>
+         <div class="col-sm-6">
+        <a href="https://www.youtube.com/channel/UCQ3-XNTfGmCxkIvXo66eWRA?view_as=subscriber"><img src="{% static 'img/youtube.png' %}"  class="img-fluid"></a>
+          <a href=""><img src="{% static 'img/instagram.png' %}" class="img-fluid"></a>
+        </div>
+      </div>
+      </div>
+    <div class="copyrights">
+      <div class="container">
+        <p>&copy; INTENSE MATH.</p>
+        <p>Almaty 2019</p>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+  {% block script %}
+  {% endblock script %}
+  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
+  <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
+  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+  <script src="{% static 'lib/modal-video/js/modal-video.js' %}"></script>
+  <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

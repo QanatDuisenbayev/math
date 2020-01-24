@@ -1,0 +1,49 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li class="menu-active"><a href="#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li><a href="{% url 'base_view' %}#pricing">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li><a href="{% url 'login_view' %}"><i class="fa fa-sign-in"></i> Кіру</a></li>
+    <li><a href="{% url 'signup' %}"><i class="fa fa-sign-in"></i>Тіркелу</a></li>
+   {% else %}
+   {% endif %}
+   {% if request.user.is_authenticated %}
+    <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i> Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}"> <i class="fa fa-sign-out"></i> Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% block content %}
+<br><br><br><br><br><br>
+
+<section id="get-started" class="padd-section text-center wow fadeInUp">
+<div class="container">
+  <div class="section-title text-center">
+      <h2>Бастапқы математика курсы</h2>
+    </div>
+</div>
+    <div class="container">
+      <div class="row">
+    	{% for article in articles %}
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{% if article.image %} {{ article.image.url }} {% endif %}" alt="img" width="100%" style="margin-bottom: 4px">
+            <h4 style="background-color:#71c55d;">{{ article.title }}</h4>
+            <p>{{ article.content|safe|truncatewords:14 }}</p>
+            <a href="{{ article.get_absolute_url }}"><button class="btn" style="background-color:#71c55d;">Оқу</button></a>
+            </div> 
+        </div>
+      {% endfor %}
+      </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+{% endblock content %}

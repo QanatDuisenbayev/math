@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li class="menu-active"><a href="{% url 'base_view' %}#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li><a href="{% url 'base_view' %}#pricing">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li><a href="{% url 'login_view' %}">Кіру</a></li>
+    <li><a href="{% url 'signup' %}">Тіркелу</a></li>
+   {% else %}
+   {% endif %}
+   {% if request.user.is_authenticated %}
+    <li><a href="{% url 'account_view' request.user %}">Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}">Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container">
+	<h3 class="text-center">Жаңа пайдаланушыны тіркеу</h3>
+	<hr>
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<form action="" method="POST">
+				{{ form.error }}
+				{% csrf_token %}
+				{{ form|crispy }}
+				<input style="font-size:20px;margin-bottom: 50px" class='btn btn-primary' type="submit" value="Тіркелу">
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

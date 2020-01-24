@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li class="menu-active"><a href="{% url 'base_view' %}#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li><a href="{% url 'base_view' %}#pricing">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li><a href="{% url 'login_view' %}"><i class="fa fa-sign-in"></i> Кіру</a></li>
+    <li><a href="{% url 'signup' %}"> <i class="fa fa-sign-in"></i> Тіркелу</a></li>
+   {% else %}
+   {% endif %}
+   {% if request.user.is_authenticated %}
+    <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i>Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}"><i class="fa fa-sign-out"></i>Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% block content %}
+<br><br><br><br><br><br>
+
+<div class="blog">
+ <div class="container">
+        <div class="row">
+        <div class="col">
+          <div class="welcome_title">Элементарлы математика курсы.</div>
+        </div>
+      </div>
+      <div class="row blog_row">
+        {% for category in categories %}
+        <!-- Blog Post -->
+        <div class="col-lg-4">
+          <div class="blog_post">
+            <div class="blog_image" style="background-image:url({{ category.image.url }})"></div>
+            <div class="blog_title_container">
+              <br>
+              {% if current_user.active == 1 %}
+              <div class="blog_post_title"><a style="font-size: 17px;" href="{{ category.get_absolute_url }}">{{ category.name }}</a></div>
+              {% else %}
+              <div class="blog_post_title"><a style="font-size: 17px;" href="">{{ category.name }}</a></div>
+              {% endif %}
+              <br>
+              <div class="blog_post_text">
+                <p style="font-size: 15px">{{ category.text|safe }}</p>
+              </div>
+              {% if current_user.active == 1 %}
+              <div class="read_more"><a href=" {{ category.get_absolute_url }} "> <button class="btn" style="background-color:#71c55d;"> Оқу </button> </a></div>
+              {% else %}
+              <div class="read_more"><a href=" {{ category.get_absolute_url }} "> <button class="btn btn-default" disabled> Оқу </button> </a></div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      <!--
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-block">
+            <img src="{{ category.image.url }}" alt="img" width="100%" style="margin-bottom: 4px">
+            <h4 style="background-color:#71c55d;">{{ category.name }}</h4>
+            <a href="{{ category.get_absolute_url }}"><button class="btn" style="background-color:#71c55d;">Оқу</button></a>
+            </div> 
+        </div>
+        --->
+
+
+        
+
+        {% endfor %}
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

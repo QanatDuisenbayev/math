@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li><a href="{% url 'base_view' %}#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li><a href="{% url 'base_view' %}#pricing">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li><a href="{% url 'login_view' %}"><i class="fa fa-sign-in"></i>Кіру</a></li>
+    <li class="menu-active"><a href="{% url 'signup' %}"><i class="fa fa-sign-in"></i>Тіркелу</a></li>
+   {% else %}
+   {% endif %}
+   {% if request.user.is_authenticated %}
+    <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i>Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}"><i class="fa fa-sign-out"></i>Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container text-center">
+  <h3 class="text-center" style="margin-bottom: 50px">Жаңа пайдаланушыны тіркеу</h3><hr>
+  <div class="row">
+    <div class="col-sm-12">
+  <form method="post">
+    {% csrf_token %}
+      {% for field in form %}
+      <p class="col-sm-12" style="font-size: 17px">
+        {{ field.label_tag }}<br>
+        <div style="font-size: 20px">{{ field }}</div>
+        {% if field.help_text %}
+          <small style="display: none">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+      {% endfor %}
+    <button type="submit" style="font-size:20px;margin-bottom: 50px; margin-top: 50px;" class='btn btn-success' >Тіркелу</button>
+    <br>
+    <label>Егер тіркелген болсаңыз </label><a style="font-size: 15px" href="{% url 'login_view' %}"> кіру</a>
+  </form>
+    </div>
+</div>
+</div>
+<br><br><br><br>
+{% endblock %}

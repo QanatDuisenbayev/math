@@ -1,0 +1,106 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li><a href="{% url 'base_view' %}#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li class="menu-active"><a href="{% url 'buy' %}">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li><a href="{% url 'login_view' %}"><i class="fa fa-sign-in"></i>Кіру</a></li>
+    <li><a href="{% url 'signup' %}"><i class="fa fa-sign-in"></i>Тіркелу</a></li>
+   {% else %}
+    <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i>Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}"><i class="fa fa-sign-out"></i>Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% block content %}
+<style type="text/css">
+	.kaspiqiwi{
+		border: 3px solid black;
+		border-color: #71c55d;
+		margin-bottom: 20px;
+	}
+	.center {
+ 		display: block;
+  		margin-left: auto;
+  		margin-right: auto;
+	}
+	.info{
+		color: black;
+		font-size: 19px;
+		line-height: 40px;
+		text-align: justify;
+		text-indent: 25px;
+	}
+	@media screen and (min-width: 601px) {
+  		.info {
+    	font-size: 19px;
+ 	 }
+ 	 	.title {
+ 	 		font-size: 20px;
+ 	 		color: black;
+ 	 		font-weight: 600;
+ 	 	}
+	}
+
+	@media screen and (max-width: 600px) {
+ 		.info {
+   	 	font-size: 12px;
+   	 	line-height: 20px;
+   	 	letter-spacing: 1px;
+  	 }
+  	 	.title {
+  	 		font-size: 12px;
+  	 		color: black;
+  	 		font-weight: 600;
+
+  	 	}
+	}
+</style>
+<br><br><br><br><br><br>
+<div class="container">
+	<p class="info">Егер <l style="color: red">қолма-қол </l> ақша ретінде төлемақы жасағыныз келсе онда келесі шоттарға ақша аударсаңыз болады: </p>
+	<br>
+<div class="row">
+<div class="col-sm-6">
+<div class="kaspiqiwi">
+<img class="center" src="data:image/png;base64,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" width="30%">
+</div>
+<p class="title">КАСПИЙ НОМЕР : XXXXX.XXXXX.XXXXX.XXXXX </p>
+</div>
+<div class="col-sm-6">
+<div class="kaspiqiwi">
+<img class="center" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd77mWJcgvYUoI_q3Ye9fX2yvV4o_Gvnxr0C9YjYL5mnsTTInczA" width="30%">
+</div>
+<p class="title">КИВИ НОМЕР : 8(708) 567-43-27 </p>
+</div>
+</div>
+<br><br>
+<hr>
+<div class="col-sm-12" style="margin-bottom: 5%">
+	<div class="info">
+
+	<p>	<h3>Анықтама</h3><br>
+		Егер ақылы бөлімге тіркелгініз келсе, жоғардағы Каспий немесе Киви номерге 5000 теңге көлемінде ақша аударсаңыз болды.<br>
+		<hr>
+		<h4 style="color: red">Ескерту</h4><br>
+		 	Комментарийға өзіңіздің жеке логиніңізді жазыңыз, мысалы : Serikov05
+		 <hr>
+		 Бірнеше уақыт өткен соң, тексеріліп сізді ақылы бөлімге аударамыз. Ақылы бөлімде арнайы сабақтар және тесттер бар. 20 сұрақтан тұратын эмтихан нәтижесі жеке парақшаңызда тұрады.
+
+	</p>
+	</div>
+</div>
+<br><br>
+<hr>
+	<p class="info">Егер онлайн ретінде төлемақы жасағыныз келсе онда келесі мәліметтерді толтырыңыз( <l style="color: red">Ескерту</l> коммиссия: 2%): </p><br>
+<iframe src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=3000%20%D1%82%D0%B5%D0%BD%D0%B3%D0%B5&targets-hint=&default-sum=3000&button-text=12&payment-type-choice=on&fio=on&phone=on&comment=on&mail=on&hint=%D0%9A%D0%BE%D0%BC%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9-%D2%93%D0%B0%20%D3%A9%D0%B7%D1%96%D2%A3%D1%96%D0%B7%D0%B4%D1%96%D2%A3%20%D1%81%D0%B0%D0%B9%D1%82%D2%9B%D0%B0%20%D1%82%D1%96%D1%80%D0%BA%D0%B5%D0%BB%D0%B3%D0%B5%D0%BD%20%D0%BB%D0%BE%D0%B3%D0%B8%D0%BD%D1%96%D2%A3%D1%96%D0%B7%D0%B4%D1%96%20%D0%B6%D0%B0%D0%B7%D1%8B%D2%A3%D1%8B%D0%B7.&successURL=http%3A%2F%2F127.0.0.1%3A8000%2F&quickpay=shop&account=4100111211520945" width="100%" height="314" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+
+<br><br><br><br>
+</div>
+
+{% endblock content %}

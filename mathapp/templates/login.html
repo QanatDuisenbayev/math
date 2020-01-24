@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+ {% block menu %}
+ <nav id="nav-menu-container">
+  <ul class="nav-menu">
+    <li><a href="{% url 'base_view' %}">Басты</a></li>
+    <li><a href="{% url 'base_view' %}#get-started">Курстар</a></li>
+    <li><a href="{% url 'base_view' %}#team">Біз туралы</a></li>
+    <li><a href="{% url 'base_view' %}#pricing">Ақылы бөлім</a></li>
+   {% if not request.user.is_authenticated %}
+    <li class="menu-active"><a href="{% url 'login_view' %}"><i class="fa fa-sign-in"></i>Кіру</a></li>
+    <li><a href="{% url 'signup' %}"><i class="fa fa-sign-in"></i>Тіркелу</a></li>
+   {% else %}
+   {% endif %}
+   {% if request.user.is_authenticated %}
+    <li><a href="{% url 'account_view' request.user %}"><i class="fa fa-user" aria-hidden="true"></i>Жeке парақшам</a></li>
+    <li><a href="{% url 'logout_view' %}"><i class="fa fa-sign-out"></i>Шығу</a></li> 
+   {% endif %}
+  </ul>
+</nav>
+{% endblock menu %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container text-center">
+	<h3 class="text-center"style="margin-bottom: 50px">Кіру</h3>
+	<hr>
+	<div style="margin-bottom: 20%" class="row">
+		<div class="col-sm-12" style="size: 10px">
+			<form action="" method="POST">
+				{{ form.error }}
+				{% csrf_token %}
+				<div style="size: 70px;">{{ form|crispy }}</div><br><br>
+        <div class="g-recaptcha" style="margin-left: 36%" data-sitekey="6Lft1McUAAAAAKcfLlSfH8r41QQH2T6WwHxCAm1Y"></div>
+				 <button type="submit" style="font-size:20px;margin-bottom: 50px; margin-top: 50px;" class='btn btn-success'>кіру</button>
+         <br>
+         <label>Егер тіркелмеген болсаңыз </label><a style="font-size: 15px" href="{% url 'signup' %}"> тіркелу</a>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key"></script>
+<script>
+grecaptcha.ready(function() {
+    grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
+       ...
+    });
+});
+</script>
+{% endblock script %}

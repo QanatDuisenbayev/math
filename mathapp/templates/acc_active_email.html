@@ -1,0 +1,7 @@
+{% autoescape off %}
+Здравствуйте {{ user.username }},
+Пожалуйста, нажмите на ссылку для подтверждения регистрации.
+Сәлеметсізбе {{ user.username }},
+Тіркеуді растау үшін сілтемені басыңыз.
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}
